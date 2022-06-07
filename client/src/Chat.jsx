@@ -20,7 +20,7 @@ export default function Chat ({ socket, userInput }) {
     useEffect(() => {
         console.log("im here");
         socket.on("receive_message", (data) => {
-            console.log("receiving message", data);
+            console.log("receiving message2", data);
         })
     }, [socket]);
 
@@ -39,6 +39,5 @@ export default function Chat ({ socket, userInput }) {
 
 
         </div>
-
-    )
+    );
 }

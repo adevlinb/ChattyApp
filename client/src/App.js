@@ -12,6 +12,8 @@ function App() {
     name: "",
     room: "",
   });
+  const [showChat, setShowChat] = useState(false);
+
 
   const handleChange = (e) => {
     setNameAndRoomInput({...nameAndRoomInput, [e.target.name]: e.target.value});
@@ -20,6 +22,7 @@ function App() {
   const joinRoom = () => {
     if (nameAndRoomInput.name !== "" && nameAndRoomInput !== "") {
       socket.emit("join_room", nameAndRoomInput)
+      setShowChat(true);
     }
   }
 
@@ -27,12 +30,17 @@ function App() {
 
   return (
     <div className="App">
-      <h3>Join Chat</h3>
-      <label htmlFor="nameInput">Your Name</label> 
-       <input onChange={handleChange} type="text" name="name" value={nameAndRoomInput.name} id="nameInput" placeholder="John"></input>
-      <input onChange={handleChange} type="text" name="room" value={nameAndRoomInput.room}  id="nameInput" placeholder="Room Number"></input>
-      <button onClick={joinRoom}>Join Room</button>
-      <Chat socket={socket} userInput={nameAndRoomInput}/>
+      { !showChat ? 
+      <div className="joinChatContainer">
+        <h3>Join Chat</h3>
+        <label htmlFor="nameInput">Your Name</label> 
+        <input onChange={handleChange} type="text" name="name" value={nameAndRoomInput.name} id="nameInput" placeholder="John"></input>
+        <input onChange={handleChange} type="text" name="room" value={nameAndRoomInput.room}  id="nameInput" placeholder="Room Number"></input>
+        <button onClick={joinRoom}>Join Room</button>
+      </div>
+      :
+      <Chat socket={socket} userInput={nameAndRoomInput}/> 
+      }
     </div>
   );
 }
